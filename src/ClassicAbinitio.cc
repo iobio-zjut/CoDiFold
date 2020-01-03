@@ -304,7 +304,7 @@ void ClassicAbinitio::apply( pose::Pose & pose ) {
 	if ( option[ OptionKeys::run::dry_run ]() ) return;
 
 	//basic::prof_reset();
-	const int pop_size = 10;
+	const int pop_size = 100;
 	int seq_len = int ( pose.total_residue() );
 	core::pose::Pose *mypose = new core::pose::Pose [pop_size];
 	Mymethod mymethod;
@@ -522,15 +522,15 @@ void ClassicAbinitio::apply( pose::Pose & pose ) {
 		bool success(false);
 		bool exchange(false);
 		int count_frag = 0;
-		int gmax = 30;
+		int gmax = 3000;
 		double Edp_trial = 0.0;
 		double Edp_target = 0.0;
 
 		double Ect_trial = 0.0;
 		double Ect_target = 0.0;
 
-		double Etotal_trial ;
-		double Etotal_target ;
+		double Etotal_trial = 0.0;
+		double Etotal_target = 0.0;
 		double Etotal_lowest = 1000;
 		double w1 = 0.3;
 		double w2 = 0.6;
@@ -588,8 +588,6 @@ void ClassicAbinitio::apply( pose::Pose & pose ) {
 					if( whether_accept_new(Etotal_trial, Etotal_target) ){
 						Ctrial = Ctrial_frag;
 						success = true;
-						std::cout<<"after cycle  "<<count_frag<<"   accept fragment assemble"<<std::endl;
-
 					}
 			  }
 			  success = false;
@@ -613,9 +611,6 @@ void ClassicAbinitio::apply( pose::Pose & pose ) {
 
 
 			  Ect_withoutdp_new(mypose[m], Ect_target, contact1, contact2, seq_len);
-
-			  Etotal_trial = 0.0;
-			  Etotal_target = 0.0;
 
 			  Etotal_trial = E_total(Ctrial, Edp_trial, Ect_trial, w1, w2, w3);
 			  Etotal_target = E_total(mypose[m], Edp_target, Ect_target, w1, w2, w3);
