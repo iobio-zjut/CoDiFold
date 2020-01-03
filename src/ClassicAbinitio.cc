@@ -576,8 +576,6 @@ void ClassicAbinitio::apply( pose::Pose & pose ) {
 
 					Ect_withoutdp_new(Ctrial_frag, Ect_trial, contact1, contact2, seq_len);
 					Ect_withoutdp_new(Ctrial, Ect_target, contact1, contact2, seq_len);
-					Etotal_trial = 0.0;
-					Etotal_target = 0.0;
 
 					Etotal_trial = E_total(Ctrial_frag, Edp_trial, Ect_trial, w1, w2, w3);
 					Etotal_target = E_total(Ctrial, Edp_target, Ect_target, w1, w2, w3);
@@ -659,7 +657,6 @@ void ClassicAbinitio::apply( pose::Pose & pose ) {
 		  release2DArr(seq_len, contact1);
 		  release2DArr(seq_len, contact2);
 
-		  //Etotal_lowest_pose.dump_pdb("Etotal_lowest_pose.pdb");
 		  pose = Etotal_lowest_pose;
 }
 
